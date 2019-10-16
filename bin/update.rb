@@ -1,14 +1,14 @@
-require 'dotenv/load'
+# require 'dotenv/load'
 require 'twitter'
 require 'httparty'
 require 'nokogiri'
 
 
 twitter = Twitter::REST::Client.new do |config|
-    config.consumer_key = ENV['CONSUMER_KEY']
-    config.consumer_secret = ENV['CONSUMER_SECRET']
-    config.access_token = ENV['ACCESS_TOKEN']
-    config.access_token_secret = ENV['ACCESS_TOKEN_SECRET']
+    config.consumer_key = 'UpQ3kFSrbYQsXoFAvSRxHJrJf'
+    config.consumer_secret = 'A96SU1rlxdglCQjwxmktRaQa2t2cqVshAPFl0XR59qpHmZkyvv'
+    config.access_token = '4709673841-JDG2jU5WTLnhj1XGmtLF371H4hGY1kzuFcY7pUd'
+    config.access_token_secret = 'QXCqIN3CYO23r3FSW91ztBD9J26wzfy80HvgrcAClXZnP'
 end
 
 latest_tweets = twitter.user_timeline('esrosn')
