@@ -1,7 +1,7 @@
 require 'dotenv/load'
-require "twitter"
-require "httparty"
-require "nokogiri"
+require 'twitter'
+require 'httparty'
+require 'nokogiri'
 
 
 twitter = Twitter::REST::Client.new do |config|
@@ -9,6 +9,20 @@ twitter = Twitter::REST::Client.new do |config|
     config.consumer_secret = ENV['CONSUMER_SECRET']
     config.access_token = ENV['ACCESS_TOKEN']
     config.access_token_secret = ENV['ACCESS_TOKEN_SECRET']
+end
+
+rss = HTTParty.get('https://www.designernews.co/?format=rss')
+doc = Nokogiri::XML(rss)
+
+doc.css('item').take(5).each do |item|
+    title = item.css('title').text
+    link = item.css('description').text
+
+    unless link.start_with?('http')
+        link = item.css('link').text
+    end
+    
+    twitter.update("#{title} #{link}")
 end
 
 
