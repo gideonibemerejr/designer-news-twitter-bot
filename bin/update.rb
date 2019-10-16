@@ -30,7 +30,7 @@ doc.css('item').take(5).each do |item|
         link = item.css('link').text
     end
 
-    unless previous_links.include?(link)
+    unless previous_links.include?(title)
         twitter.update("#{title} #{link}")
     end
 end
