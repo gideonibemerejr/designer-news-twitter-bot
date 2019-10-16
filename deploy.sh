@@ -12,8 +12,8 @@
     rm build.zip;
     echo "creating a new build file"
     zip build.zip *  -r -x .git/\* \*.sh specs/\* tests/\* \*.zip
-    echo "Uploading $lambda to $region";
-    aws lambda update-function-code --function-name $lambda --zip-file fileb://build.zip --region=eu-west-2 --publish --profile denis_lambda
+    echo "Uploading $lambda";
+    aws lambda update-function-code --function-name $lambda --zip-file fileb://build.zip --region=us-east-1 --publish
     if [ $? -eq 0 ]; then
       echo "## Deploy successful ##"
     else
