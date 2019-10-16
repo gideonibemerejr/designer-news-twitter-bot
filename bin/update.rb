@@ -11,6 +11,14 @@ twitter = Twitter::REST::Client.new do |config|
     config.access_token_secret = ENV['ACCESS_TOKEN_SECRET']
 end
 
+latest_tweets = twitter.user_timeline('esrosn')
+
+previous_links = latest_tweets.map do |tweet|
+    if tweet.urls.any?
+        tweet.urls[0].expanded_url
+    end
+end
+
 rss = HTTParty.get('https://www.designernews.co/?format=rss')
 doc = Nokogiri::XML(rss)
 
@@ -21,8 +29,10 @@ doc.css('item').take(5).each do |item|
     unless link.start_with?('http')
         link = item.css('link').text
     end
-    
-    twitter.update("#{title} #{link}")
+
+    unless previous_links.include?(link)
+        twitter.update("#{title} #{link}")
+    end
 end
 
 
